@@ -7,24 +7,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Forest & River Palette */
             --bg-forest: #0d2b18;
             --bg-river: #05182d;
             --text-cyan: #00e5ff; 
             --highlight-green: #2ecc71; 
             --border-teal: #117864;
             --danger-red: #ff2a4b;
-            --category-color: #f39c12; /* Golden orange for categories */
+            --category-color: #f39c12; 
         }
 
         body {
-            /* Pixel Art Background */
             background-image: url('Pixel-art-landscape-mountains-trees-river-retro-background-game-website-captivating-serene-perfect-video-games-309551503.jpg');
             background-size: cover;
             background-position: center center;
             background-attachment: fixed;
             background-repeat: no-repeat;
-            background-color: var(--bg-river); /* Fallback color just in case */
+            background-color: var(--bg-river); 
             
             color: white;
             font-family: 'Press Start 2P', cursive;
@@ -58,13 +56,11 @@
             margin: 0 auto;
             border: 4px solid var(--border-teal);
             padding: 30px;
-            /* LOWERED OPACITY: Changed from 0.85 to 0.5 to let the background shine through! */
             background-color: rgba(0, 0, 0, 0.5); 
             box-shadow: 10px 10px 0px black;
-            backdrop-filter: blur(2px); /* Optional: adds a slight blur to make text pop against the background */
+            backdrop-filter: blur(2px); 
         }
 
-        /* --- INTRO SCREEN STYLES --- */
         #intro-screen { display: block; }
 
         .briefing-text {
@@ -73,7 +69,7 @@
             line-height: 1.8;
             color: #b3d4c6;
             margin-top: 30px;
-            background-color: rgba(0, 0, 0, 0.4); /* Added a slight dark box behind text for readability */
+            background-color: rgba(0, 0, 0, 0.4); 
             padding: 15px;
             border-radius: 5px;
         }
@@ -97,7 +93,6 @@
             background-color: rgba(255, 42, 75, 0.1);
         }
 
-        /* --- SELECTION SCREEN STYLES --- */
         #selection-screen { display: none; }
 
         .grid {
@@ -108,14 +103,12 @@
             margin-bottom: 20px;
         }
 
-        /* Selectable Cards */
         .card {
             border: 3px dashed var(--border-teal);
             padding: 15px;
             cursor: pointer;
             transition: 0.2s;
             width: 200px;
-            /* LOWERED OPACITY: Changed from 0.9 to 0.6 */
             background-color: rgba(8, 20, 16, 0.6); 
             display: flex;
             flex-direction: column;
@@ -125,22 +118,16 @@
         .card img {
             width: 100%;
             height: 120px;
-            /* FIX APPLIED HERE: Changed object-fit from 'cover' to 'contain' 
-               This ensures the entire image fits inside the box without being cut off. */
             object-fit: contain; 
             border-bottom: 2px solid var(--border-teal);
             margin-bottom: 10px;
-            
-            /* ADDED: White background for the image container itself. 
-               Since most gear images have white backgrounds, this makes the 
-               letterboxed areas blend in perfectly. */
             background-color: white; 
         }
 
         .card:hover {
             border-color: var(--text-cyan);
             transform: scale(1.05);
-            background-color: rgba(8, 20, 16, 0.8); /* Gets slightly darker on hover for effect */
+            background-color: rgba(8, 20, 16, 0.8); 
         }
 
         .card.active {
@@ -149,7 +136,6 @@
             box-shadow: 0 0 15px var(--highlight-green);
         }
 
-        /* Gear Multi-Select styling differentiation */
         .gear-card.active {
             border-color: var(--category-color);
             box-shadow: 0 0 15px var(--category-color);
@@ -159,7 +145,6 @@
         .gear-card h3 { color: var(--category-color); }
         .card p { font-size: 0.6rem; color: #b3d4c6; margin: 5px 0; text-shadow: 1px 1px black;}
 
-        /* Inputs & Buttons */
         input[type="text"] {
             font-family: 'Press Start 2P', cursive;
             background: rgba(0, 0, 0, 0.7);
@@ -206,6 +191,13 @@
     </style>
 </head>
 <body>
+
+    <form name="canoe-rsvp" netlify netlify-honeypot="bot-field" hidden id="netlify-form">
+        <input type="text" name="name" id="net-name">
+        <input type="text" name="boat" id="net-boat">
+        <input type="text" name="gear" id="net-gear">
+        <input type="text" name="difficulty" id="net-diff">
+    </form>
 
     <div class="container" id="intro-screen">
         <h1>📜 QUEST BRIEFING</h1>
@@ -357,23 +349,20 @@
             </div>
         </div>
 
-        <button class="start-btn" onclick="submitRSVP()">LAUNCH EXPEDITION</button>
+        <button class="start-btn" onclick="submitRSVP()" id="submit-btn">LAUNCH EXPEDITION</button>
     </div>
 
     <script>
-        // Transition from Briefing to Loadout Selection
         function acceptChallenge() {
             document.getElementById('intro-screen').style.display = 'none';
             document.getElementById('selection-screen').style.display = 'block';
             window.scrollTo(0, 0); 
         }
 
-        // Selection Logic Variables
         let selectedBoat = null;
         let selectedDifficulty = null;
         let selectedGearArray = []; 
 
-        // Single Select Logic (Boats & Difficulty)
         function setupSingleSelection(cardClass, callback) {
             const cards = document.querySelectorAll(cardClass);
             cards.forEach(card => {
@@ -385,14 +374,12 @@
             });
         }
 
-        // Multi-Select Logic (Gear)
         function setupMultiSelection() {
             const gearCards = document.querySelectorAll('.gear-card');
             gearCards.forEach(card => {
                 card.addEventListener('click', () => {
                     card.classList.toggle('active'); 
                     const val = card.getAttribute('data-value');
-                    
                     if (card.classList.contains('active')) {
                         selectedGearArray.push(val); 
                     } else {
@@ -402,12 +389,10 @@
             });
         }
 
-        // Initialize listeners
         setupSingleSelection('.boat-card', (val) => selectedBoat = val);
         setupSingleSelection('.diff-card', (val) => selectedDifficulty = val);
         setupMultiSelection(); 
 
-        // Submit RSVP
         function submitRSVP() {
             const playerName = document.getElementById('playerName').value.trim();
 
@@ -416,12 +401,38 @@
             if (selectedGearArray.length === 0) return alert("ERROR: You can't go empty-handed! Choose at least one gear item."); 
             if (!selectedDifficulty) return alert("ERROR: Please select a difficulty level!");
 
-            // Format gear array into a comma-separated string for the URL
             const gearString = selectedGearArray.join(', ');
 
-            // Redirects to success.html and passes the choices in the URL
-            const urlParams = `?name=${encodeURIComponent(playerName)}&boat=${encodeURIComponent(selectedBoat)}&gear=${encodeURIComponent(gearString)}&diff=${encodeURIComponent(selectedDifficulty)}`;
-            window.location.href = 'success.html' + urlParams;
+            // Change button text so user knows it is loading
+            const btn = document.getElementById('submit-btn');
+            btn.innerText = "UPLOADING DATA...";
+            btn.style.pointerEvents = "none"; 
+
+            // 1. Populate the hidden form with the selected data
+            document.getElementById('net-name').value = playerName;
+            document.getElementById('net-boat').value = selectedBoat;
+            document.getElementById('net-gear').value = gearString;
+            document.getElementById('net-diff').value = selectedDifficulty;
+
+            // 2. Submit data silently to Netlify via Fetch API
+            const formElement = document.getElementById('netlify-form');
+            const formData = new FormData(formElement);
+
+            fetch("/", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams(formData).toString()
+            })
+            .then(() => {
+                // 3. On success, redirect to success.html with URL parameters
+                const urlParams = `?name=${encodeURIComponent(playerName)}&boat=${encodeURIComponent(selectedBoat)}&gear=${encodeURIComponent(gearString)}&diff=${encodeURIComponent(selectedDifficulty)}`;
+                window.location.href = 'success.html' + urlParams;
+            })
+            .catch((error) => {
+                alert("Network Error: Could not connect to the server.");
+                btn.innerText = "LAUNCH EXPEDITION";
+                btn.style.pointerEvents = "auto";
+            });
         }
     </script>
 </body>
