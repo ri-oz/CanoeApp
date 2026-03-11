@@ -18,8 +18,14 @@
         }
 
         body {
-            background: linear-gradient(135deg, var(--bg-forest) 0%, var(--bg-river) 100%);
+            /* NEW: Pixel Art Background */
+            background-image: url('Pixel-art-landscape-mountains-trees-river-retro-background-game-website-captivating-serene-perfect-video-games-309551503.jpg');
+            background-size: cover;
+            background-position: center center;
             background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-color: var(--bg-river); /* Fallback color just in case */
+            
             color: white;
             font-family: 'Press Start 2P', cursive;
             text-align: center;
@@ -52,7 +58,9 @@
             margin: 0 auto;
             border: 4px solid var(--border-teal);
             padding: 30px;
-            background-color: rgba(0, 0, 0, 0.7); 
+            /* The 0.8 opacity here keeps the container dark enough to read text, 
+               but lets a tiny bit of your cool background bleed through! */
+            background-color: rgba(0, 0, 0, 0.85); 
             box-shadow: 10px 10px 0px black;
         }
 
@@ -104,7 +112,7 @@
             cursor: pointer;
             transition: 0.2s;
             width: 200px;
-            background-color: #081410; 
+            background-color: rgba(8, 20, 16, 0.9); /* Slightly transparent to match vibe */
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -351,7 +359,7 @@
         // Selection Logic Variables
         let selectedBoat = null;
         let selectedDifficulty = null;
-        let selectedGearArray = []; // Using an array for multi-select
+        let selectedGearArray = []; 
 
         // Single Select Logic (Boats & Difficulty)
         function setupSingleSelection(cardClass, callback) {
@@ -370,13 +378,13 @@
             const gearCards = document.querySelectorAll('.gear-card');
             gearCards.forEach(card => {
                 card.addEventListener('click', () => {
-                    card.classList.toggle('active'); // Toggles the selection visually
+                    card.classList.toggle('active'); 
                     const val = card.getAttribute('data-value');
                     
                     if (card.classList.contains('active')) {
-                        selectedGearArray.push(val); // Add to inventory
+                        selectedGearArray.push(val); 
                     } else {
-                        selectedGearArray = selectedGearArray.filter(item => item !== val); // Remove from inventory
+                        selectedGearArray = selectedGearArray.filter(item => item !== val); 
                     }
                 });
             });
