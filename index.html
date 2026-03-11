@@ -13,6 +13,7 @@
             --text-cyan: #00e5ff; 
             --highlight-green: #2ecc71; 
             --border-teal: #117864;
+            --danger-red: #ff2a4b;
         }
 
         body {
@@ -34,7 +35,7 @@
             margin-bottom: 20px;
         }
 
-        h1 { font-size: 2rem; }
+        h1 { font-size: 2rem; line-height: 1.3; }
         h2 { font-size: 1rem; margin-top: 40px; }
 
         .container {
@@ -42,8 +43,50 @@
             margin: 0 auto;
             border: 4px solid var(--border-teal);
             padding: 30px;
-            background-color: rgba(0, 0, 0, 0.6); 
+            background-color: rgba(0, 0, 0, 0.7); 
             box-shadow: 10px 10px 0px black;
+        }
+
+        /* --- INTRO SCREEN STYLES --- */
+        #intro-screen {
+            display: block; /* Visible by default */
+        }
+
+        .briefing-text {
+            text-align: left;
+            font-size: 0.8rem;
+            line-height: 1.8;
+            color: #b3d4c6;
+            margin-top: 30px;
+        }
+
+        .briefing-text h3 {
+            color: var(--highlight-green);
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            text-shadow: 1px 1px 0px black;
+        }
+
+        .briefing-text ul {
+            padding-left: 20px;
+        }
+
+        .briefing-text li {
+            margin-bottom: 10px;
+        }
+
+        .warning-box {
+            color: var(--danger-red);
+            border: 3px dashed var(--danger-red);
+            padding: 15px;
+            margin: 20px 0;
+            background-color: rgba(255, 42, 75, 0.1);
+        }
+
+        /* --- SELECTION SCREEN STYLES --- */
+        #selection-screen {
+            display: none; /* Hidden until button is clicked */
         }
 
         .grid {
@@ -82,8 +125,8 @@
             box-shadow: 0 0 15px var(--highlight-green);
         }
 
-        .card h3 { font-size: 0.8rem; color: var(--highlight-green); }
-        .card p { font-size: 0.6rem; color: #b3d4c6; }
+        .card h3 { font-size: 0.8rem; color: var(--highlight-green); margin: 10px 0; }
+        .card p { font-size: 0.6rem; color: #b3d4c6; margin: 5px 0;}
 
         /* Inputs & Buttons */
         input[type="text"] {
@@ -132,6 +175,55 @@
 </head>
 <body>
 
+    <div class="container" id="intro-screen">
+        <h1>📜 QUEST BRIEFING</h1>
+        <h2 style="color: var(--highlight-green);">THE ABAVA WILDERNESS RUN</h2>
+        
+        <div class="briefing-text">
+            <p><strong>> LOCATION:</strong> Renda (Avoti) ➡️ Naba Lakes</p>
+            <p><strong>> DISTANCE:</strong> ~45 km</p>
+            <p><strong>> DIFFICULTY RATING:</strong> Endurance / Hardcore</p>
+
+            <h3>MISSION OVERVIEW:</h3>
+            <p>Downstream from the Renda Outpost lies an untamed wilderness. As you paddle further from civilization, roads disappear and fast-travel points drop to zero. There are no quick "one-day" missions here—this sector is purely about survival and raw nature.</p>
+            <p>Since the original extraction point at the Venta River confluence was locked down (a hostile NPC landowner actively denies access to boaters), player traffic in this zone has plummeted. The full run to the Naba Lakes is an endurance quest that most casuals avoid.</p>
+
+            <h3>TIME LIMITS:</h3>
+            <ul>
+                <li><strong>Speedrun Mode:</strong> 2 Days of high-intensity, active paddling.</li>
+                <li><strong>Casual Playthrough:</strong> 3 Days for a slower, scenic pace.</li>
+            </ul>
+
+            <div class="warning-box">
+                <p style="text-align: center; margin-top: 0;"><strong>⚠️ WARNING: POINT OF NO RETURN</strong></p>
+                <p style="margin-bottom: 0;">Once you leave Renda, land-based extraction is practically impossible until you reach the Venta River. While theoretically accessible in a few secret glitch spots, our transport guild absolutely refuses to deploy rescue vehicles into this sector during peak season. Once you launch, you are committing to the full run.</p>
+            </div>
+
+            <h3>🗺️ LEVEL PROGRESSION & WAYPOINTS</h3>
+            <p><strong>Phase 1: The Rapids (4 km Mark)</strong><br>
+            The difficulty ramps up here. Your first major obstacle is the Brasliņi Shallows. The current gains speed, the water drops, and rock hazards spawn more frequently. The biome shifts to "Canadian Taiga"—thick spruce forests close in, and the last traces of civilization fade from your minimap.</p>
+
+            <p><strong>Phase 2: The Sandstone Canyons</strong><br>
+            Approaching the Venta confluence, you'll unlock several major Points of Interest (POIs)—massive sandstone cliffs flanking the river:</p>
+            <ul>
+                <li><strong>Zilumi Cliffs:</strong> 15-meter high towering rock faces, heavily camouflaged by forest terrain.</li>
+                <li><strong>Lējēju (Sildruvu) Cliffs:</strong> Located on your right flank, featuring a hidden mini-waterfall.</li>
+                <li><strong>Muižarāji Cliffs:</strong> The ultimate landmark—the most massive and iconic sandstone wall on the Abava map.</li>
+            </ul>
+
+            <h3>🏕️ SAVE ZONES (CAMPING):</h3>
+            <p>Don't expect premium inns or upgraded campsites. Your only safe zones between Renda and Venta are basic, bare-bones State Forest camps. Bring your own survival gear.</p>
+
+            <h3>🏁 THE FINAL BOSS: VENTA RIVER TRANSIT</h3>
+            <p>Upon breaching the Venta River, execute a hard right turn. You have ~7.5 km of endurance paddling remaining. </p>
+            <p><strong>Navigation Puzzle:</strong> Keep your eyes on the skyline for high-voltage power lines. Immediately after passing beneath them, hug the left bank to find the hidden channel. Navigate through this portal to reach the final extraction point at the Great Naba Lake.</p>
+            
+            <p style="text-align: center; color: var(--text-cyan); margin-top: 30px;"><strong>Good luck, Explorer.</strong></p>
+        </div>
+
+        <button class="start-btn" onclick="acceptChallenge()">CHALLENGE ACCEPTED</button>
+    </div>
+
     <div class="container" id="selection-screen">
         <h1>🌲 RIVER QUEST 🌊</h1>
 
@@ -174,6 +266,14 @@
     </div>
 
     <script>
+        // Transition from Briefing to Loadout Selection
+        function acceptChallenge() {
+            document.getElementById('intro-screen').style.display = 'none';
+            document.getElementById('selection-screen').style.display = 'block';
+            window.scrollTo(0, 0); // Scrolls back to top for the menu
+        }
+
+        // Handle card clicking logic
         let selectedBoat = null;
         let selectedDifficulty = null;
 
@@ -191,6 +291,7 @@
         setupSelection('.boat-card', (val) => selectedBoat = val);
         setupSelection('.diff-card', (val) => selectedDifficulty = val);
 
+        // Submit RSVP and go to success page
         function submitRSVP() {
             const playerName = document.getElementById('playerName').value.trim();
 
