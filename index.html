@@ -125,9 +125,16 @@
         .card img {
             width: 100%;
             height: 120px;
-            object-fit: cover;
+            /* FIX APPLIED HERE: Changed object-fit from 'cover' to 'contain' 
+               This ensures the entire image fits inside the box without being cut off. */
+            object-fit: contain; 
             border-bottom: 2px solid var(--border-teal);
             margin-bottom: 10px;
+            
+            /* ADDED: White background for the image container itself. 
+               Since most gear images have white backgrounds, this makes the 
+               letterboxed areas blend in perfectly. */
+            background-color: white; 
         }
 
         .card:hover {
