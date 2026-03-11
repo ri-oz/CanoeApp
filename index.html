@@ -7,36 +7,42 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #1a1a2e;
-            --text-color: #e94560;
-            --highlight: #0f3460;
-            --selected: #16213e;
-            --border-color: #e94560;
+            /* Forest & River Palette */
+            --bg-forest: #0d2b18;
+            --bg-river: #05182d;
+            --text-cyan: #00e5ff; /* Bright river water */
+            --highlight-green: #2ecc71; /* Vibrant leaf green */
+            --border-teal: #117864;
         }
 
         body {
-            background-color: var(--bg-color);
+            /* Gradient background transitioning from deep green to deep blue */
+            background: linear-gradient(135deg, var(--bg-forest) 0%, var(--bg-river) 100%);
+            background-attachment: fixed;
             color: white;
             font-family: 'Press Start 2P', cursive;
             text-align: center;
             padding: 20px;
             line-height: 1.5;
+            min-height: 100vh;
+            margin: 0;
         }
 
         h1, h2 {
-            color: var(--text-color);
+            color: var(--text-cyan);
             text-shadow: 2px 2px 0px black;
             margin-bottom: 20px;
         }
 
+        h1 { font-size: 2rem; }
         h2 { font-size: 1rem; margin-top: 40px; }
 
         .container {
             max-width: 800px;
             margin: 0 auto;
-            border: 4px solid var(--border-color);
+            border: 4px solid var(--border-teal);
             padding: 30px;
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(0, 0, 0, 0.6); /* Slightly darker for contrast */
             box-shadow: 10px 10px 0px black;
         }
 
@@ -49,57 +55,42 @@
 
         /* Selectable Cards */
         .card {
-            border: 3px dashed gray;
+            border: 3px dashed var(--border-teal);
             padding: 15px;
             cursor: pointer;
             transition: 0.2s;
             width: 200px;
-            background-color: black;
+            background-color: #081410; /* Very dark green-black */
         }
 
-        .card .card-image {
+        .card img {
             width: 100%;
             height: 120px;
-            border-bottom: 2px solid gray;
+            object-fit: cover;
+            border-bottom: 2px solid var(--border-teal);
             margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .card .card-image svg {
-            width: 100%;
-            height: 100%;
         }
 
         .card:hover {
-            border-color: white;
+            border-color: var(--text-cyan);
             transform: scale(1.05);
         }
 
         .card.active {
-            border: 4px solid #4ecca3;
-            background-color: var(--highlight);
-            box-shadow: 0 0 15px #4ecca3;
+            border: 4px solid var(--highlight-green);
+            background-color: #0b221d;
+            box-shadow: 0 0 15px var(--highlight-green);
         }
 
-        .card h3 {
-            font-size: 0.8rem;
-            color: #4ecca3;
-        }
+        .card h3 { font-size: 0.8rem; color: var(--highlight-green); }
+        .card p { font-size: 0.6rem; color: #b3d4c6; }
 
-        .card p {
-            font-size: 0.6rem;
-            color: #aaa;
-        }
-
-        /* Character Input */
+        /* Inputs & Buttons */
         input[type="text"] {
             font-family: 'Press Start 2P', cursive;
             background: black;
-            color: #4ecca3;
-            border: 3px solid var(--border-color);
+            color: var(--text-cyan);
+            border: 3px solid var(--border-teal);
             padding: 15px;
             font-size: 1rem;
             width: 80%;
@@ -109,25 +100,26 @@
 
         input[type="text"]:focus {
             outline: none;
-            border-color: #4ecca3;
+            border-color: var(--highlight-green);
+            box-shadow: 0 0 10px var(--highlight-green);
         }
 
-        /* Submit Button */
         .start-btn {
-            margin-top: 50px;
-            background-color: var(--text-color);
+            margin-top: 40px;
+            background-color: var(--border-teal);
             color: white;
             font-family: 'Press Start 2P', cursive;
             font-size: 1.2rem;
             padding: 15px 30px;
-            border: 4px solid white;
+            border: 4px solid var(--highlight-green);
             cursor: pointer;
             box-shadow: 5px 5px 0px black;
             transition: 0.1s;
         }
 
         .start-btn:hover {
-            background-color: #ff2a4b;
+            background-color: var(--highlight-green);
+            color: black;
             transform: translate(-2px, -2px);
             box-shadow: 7px 7px 0px black;
         }
@@ -136,120 +128,140 @@
             transform: translate(3px, 3px);
             box-shadow: 2px 2px 0px black;
         }
+
+        /* --- CONFIRMATION SCREEN STYLES --- */
+        #confirmation-screen {
+            display: none;
+        }
+
+        .stats-box {
+            border: 3px solid var(--text-cyan);
+            background: #05182d;
+            padding: 20px;
+            margin: 30px auto;
+            max-width: 400px;
+            text-align: left;
+            color: var(--text-cyan);
+            box-shadow: 0 0 15px var(--text-cyan);
+        }
+
+        .stats-box p {
+            margin: 15px 0;
+            font-size: 0.8rem;
+            line-height: 1.8;
+        }
+
+        .stats-box span {
+            color: white;
+        }
+
+        .blinking {
+            animation: blinker 1.5s linear infinite;
+            color: var(--highlight-green);
+            margin-top: 30px;
+            font-size: 0.8rem;
+        }
+
+        @keyframes blinker {
+            50% { opacity: 0; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>PLAYER SELECT</h1>
+    <div class="container" id="selection-screen">
+        <h1>🌲 RIVER QUEST 🌊</h1>
 
-        <form id="rsvpForm" name="canoe-rsvp" method="POST" data-netlify="true" action="/success.html">
-            <input type="hidden" name="form-name" value="canoe-rsvp">
+        <h2>1. ENTER EXPLORER NAME</h2>
+        <input type="text" id="playerName" placeholder="e.g. River King" required>
 
-            <h2>1. ENTER PLAYER NAME</h2>
-            <input type="text" id="playerName" name="playerName" placeholder="e.g. River King" required>
-
-            <h2>2. CHOOSE YOUR VESSEL</h2>
-            <input type="hidden" id="vesselField" name="vessel" value="">
-            <div class="grid" id="boatSelection">
-                <div class="card boat-card" data-value="Crimson Canoe">
-                    <div class="card-image">
-                        <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="200" height="120" fill="#1a0a0a"/>
-                            <path d="M30 90 Q100 40 170 90" stroke="#e94560" stroke-width="4" fill="none"/>
-                            <path d="M25 90 Q100 50 175 90 Z" fill="#c0392b" opacity="0.6"/>
-                            <line x1="100" y1="50" x2="100" y2="80" stroke="#aaa" stroke-width="3"/>
-                            <line x1="85" y1="65" x2="115" y2="65" stroke="#aaa" stroke-width="3"/>
-                            <text x="100" y="25" text-anchor="middle" fill="#e94560" font-size="11" font-family="monospace" font-weight="bold">CANOE</text>
-                        </svg>
-                    </div>
-                    <h3>Crimson Cruiser</h3>
-                    <p>Class: Heavy Canoe</p>
-                    <p>Capacity: 3 Players</p>
-                    <p>Stat: High Cargo, Low Speed</p>
-                </div>
-                <div class="card boat-card" data-value="Orange Kayak">
-                    <div class="card-image">
-                        <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="200" height="120" fill="#1a0f0a"/>
-                            <path d="M15 75 Q100 25 185 75" stroke="#e67e22" stroke-width="4" fill="none"/>
-                            <path d="M10 75 Q100 35 190 75 Z" fill="#e67e22" opacity="0.5"/>
-                            <line x1="100" y1="38" x2="100" y2="68" stroke="#aaa" stroke-width="3"/>
-                            <line x1="82" y1="53" x2="118" y2="53" stroke="#aaa" stroke-width="3"/>
-                            <text x="100" y="20" text-anchor="middle" fill="#e67e22" font-size="11" font-family="monospace" font-weight="bold">KAYAK</text>
-                        </svg>
-                    </div>
-                    <h3>Orange Outlaw</h3>
-                    <p>Class: Rapid Kayak</p>
-                    <p>Capacity: 2 Players</p>
-                    <p>Stat: High Speed, Low Cargo</p>
-                </div>
+        <h2>2. CHOOSE YOUR VESSEL</h2>
+        <div class="grid" id="boatSelection">
+            <div class="card boat-card" data-value="Crimson Cruiser (3-Seater)">
+                <img src="kanoe-roto-viking (1).jpg" alt="Red Canoe">
+                <h3>Crimson Cruiser</h3>
+                <p>Class: Heavy Canoe</p>
+                <p>Capacity: 3 Explorers</p>
             </div>
-
-            <h2>3. SELECT DIFFICULTY</h2>
-            <input type="hidden" id="difficultyField" name="difficulty" value="">
-            <div class="grid" id="difficultySelection">
-                <div class="card diff-card" data-value="Chill">
-                    <h3>EASY</h3>
-                    <p>Lazy River Float</p>
-                    <p>(Snacks included)</p>
-                </div>
-                <div class="card diff-card" data-value="Moderate">
-                    <h3>NORMAL</h3>
-                    <p>Steady Paddling</p>
-                    <p>(A light workout)</p>
-                </div>
-                <div class="card diff-card" data-value="Hardcore">
-                    <h3>HARDCORE</h3>
-                    <p>White Water Rush</p>
-                    <p>(Prepare to get wet)</p>
-                </div>
+            <div class="card boat-card" data-value="Orange Outlaw (2-Seater)">
+                <img src="kajak-vista.jpg" alt="Orange Kayak">
+                <h3>Orange Outlaw</h3>
+                <p>Class: Rapid Kayak</p>
+                <p>Capacity: 2 Explorers</p>
             </div>
+        </div>
 
-            <button type="submit" class="start-btn">JOIN LOBBY</button>
-        </form>
+        <h2>3. SELECT DIFFICULTY</h2>
+        <div class="grid" id="difficultySelection">
+            <div class="card diff-card" data-value="EASY - Lazy River">
+                <h3>EASY 🦆</h3>
+                <p>Lazy River Float</p>
+            </div>
+            <div class="card diff-card" data-value="NORMAL - Steady">
+                <h3>NORMAL 🛶</h3>
+                <p>Steady Paddling</p>
+            </div>
+            <div class="card diff-card" data-value="HARDCORE - Rapids">
+                <h3>HARDCORE 🌊</h3>
+                <p>White Water Rush</p>
+            </div>
+        </div>
+
+        <button class="start-btn" onclick="submitRSVP()">LAUNCH EXPEDITION</button>
+    </div>
+
+    <div class="container" id="confirmation-screen">
+        <h1>🏕️ SUCCESS!</h1>
+        <h2>LOADOUT CONFIRMED</h2>
+
+        <div class="stats-box">
+            <p>> EXPLORER ID: <br><span id="summary-name"></span></p>
+            <p>> VESSEL: <br><span id="summary-boat"></span></p>
+            <p>> DIFFICULTY: <br><span id="summary-diff"></span></p>
+        </div>
+
+        <p class="blinking">PACKING GEAR AND CHECKING TIDES...</p>
+
+        <button class="start-btn" onclick="goBack()" style="font-size: 0.8rem; padding: 10px 20px; margin-top: 20px; background-color: #0d2b18; color: white;">EDIT LOADOUT</button>
     </div>
 
     <script>
         let selectedBoat = null;
         let selectedDifficulty = null;
 
-        function setupSelection(cardClass, hiddenFieldId, callback) {
+        function setupSelection(cardClass, callback) {
             const cards = document.querySelectorAll(cardClass);
-            const hiddenField = document.getElementById(hiddenFieldId);
             cards.forEach(card => {
                 card.addEventListener('click', () => {
                     cards.forEach(c => c.classList.remove('active'));
                     card.classList.add('active');
-                    const value = card.getAttribute('data-value');
-                    hiddenField.value = value;
-                    callback(value);
+                    callback(card.getAttribute('data-value'));
                 });
             });
         }
 
-        setupSelection('.boat-card', 'vesselField', (val) => selectedBoat = val);
-        setupSelection('.diff-card', 'difficultyField', (val) => selectedDifficulty = val);
+        setupSelection('.boat-card', (val) => selectedBoat = val);
+        setupSelection('.diff-card', (val) => selectedDifficulty = val);
 
-        document.getElementById('rsvpForm').addEventListener('submit', function(e) {
+        function submitRSVP() {
             const playerName = document.getElementById('playerName').value.trim();
 
-            if (!playerName) {
-                e.preventDefault();
-                alert("ERROR: Player Name required!");
-                return;
-            }
-            if (!selectedBoat) {
-                e.preventDefault();
-                alert("ERROR: Please select a vessel!");
-                return;
-            }
-            if (!selectedDifficulty) {
-                e.preventDefault();
-                alert("ERROR: Please select a difficulty level!");
-                return;
-            }
-        });
+            if (!playerName) return alert("ERROR: Explorer Name required!");
+            if (!selectedBoat) return alert("ERROR: Please select a vessel!");
+            if (!selectedDifficulty) return alert("ERROR: Please select a difficulty level!");
+
+            document.getElementById('summary-name').innerText = playerName;
+            document.getElementById('summary-boat').innerText = selectedBoat;
+            document.getElementById('summary-diff').innerText = selectedDifficulty;
+
+            document.getElementById('selection-screen').style.display = 'none';
+            document.getElementById('confirmation-screen').style.display = 'block';
+        }
+
+        function goBack() {
+            document.getElementById('confirmation-screen').style.display = 'none';
+            document.getElementById('selection-screen').style.display = 'block';
+        }
     </script>
 </body>
 </html>
