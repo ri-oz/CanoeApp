@@ -246,7 +246,56 @@
             </div>
         </div>
 
-        <h2>3. SELECT DIFFICULTY</h2>
+        <h2>3. CHOOSE YOUR GEAR</h2>
+        <div class="grid" id="gearSelection">
+            <div class="card gear-card" data-value="Canoe Paddle">
+                <img src="Canoe paddle.jpg" alt="Canoe Paddle">
+                <h3>Canoe Paddle</h3>
+                <p>Power: +2, Cargo: -1</p>
+            </div>
+            <div class="card gear-card" data-value="Dry Bag">
+                <img src="Dry bag.jpg" alt="Dry Bag">
+                <h3>Dry Bag</h3>
+                <p>Cargo: +5, Water Resist</p>
+            </div>
+            <div class="card gear-card" data-value="Survival Grass">
+                <img src="Grass.jpg" alt="Survival Grass">
+                <h3>Survival Grass</h3>
+                <p>Camouflage: +3, Food (Desperate): +1</p>
+            </div>
+            <div class="card gear-card" data-value="Portable Hammock">
+                <img src="Hammock .png" alt="Portable Hammock">
+                <h3>Portable Hammock</h3>
+                <p>Rest: +4, Comfort: +2</p>
+            </div>
+            <div class="card gear-card" data-value="Hardcore Ration">
+                <img src="Meat.jpg" alt="Hardcore Ration">
+                <h3>Hardcore Ration</h3>
+                <p>Sustenance: +8, Energy: +3</p>
+            </div>
+            <div class="card gear-card" data-value="Mystery Substance">
+                <img src="Substance .jpg" alt="Mystery Substance">
+                <h3>Mystery Substance</h3>
+                <p>Effects: Unknown. Use at own risk.</p>
+            </div>
+            <div class="card gear-card" data-value="Outpost Tent">
+                <img src="Tent.jpg" alt="Outpost Tent">
+                <h3>Outpost Tent</h3>
+                <p>Protection: +5, Group Rest: +6</p>
+            </div>
+            <div class="card gear-card" data-value="Morale Bottle">
+                <img src="Whiskey .jpg" alt="Morale Bottle">
+                <h3>Morale Bottle</h3>
+                <p>Morale: +5, Warmth: +2, Sanity: -1</p>
+            </div>
+            <div class="card gear-card" data-value="Kayak Paddle">
+                <img src="kayak paddle.jpg" alt="Kayak Paddle">
+                <h3>Kayak Paddle</h3>
+                <p>Speed: +3, Cargo: -1</p>
+            </div>
+        </div>
+
+        <h2>4. SELECT DIFFICULTY</h2>
         <div class="grid" id="difficultySelection">
             <div class="card diff-card" data-value="EASY">
                 <h3>EASY 🦆</h3>
@@ -275,6 +324,7 @@
 
         // Handle card clicking logic
         let selectedBoat = null;
+        let selectedGear = null; // New global variable
         let selectedDifficulty = null;
 
         function setupSelection(cardClass, callback) {
@@ -289,6 +339,7 @@
         }
 
         setupSelection('.boat-card', (val) => selectedBoat = val);
+        setupSelection('.gear-card', (val) => selectedGear = val); // New listener
         setupSelection('.diff-card', (val) => selectedDifficulty = val);
 
         // Submit RSVP and go to success page
@@ -297,10 +348,11 @@
 
             if (!playerName) return alert("ERROR: Explorer Name required!");
             if (!selectedBoat) return alert("ERROR: Please select a vessel!");
+            if (!selectedGear) return alert("ERROR: Please choose your gear!"); // New validation
             if (!selectedDifficulty) return alert("ERROR: Please select a difficulty level!");
 
             // Redirects to success.html and passes the choices in the URL
-            const urlParams = `?name=${encodeURIComponent(playerName)}&boat=${encodeURIComponent(selectedBoat)}&diff=${encodeURIComponent(selectedDifficulty)}`;
+            const urlParams = `?name=${encodeURIComponent(playerName)}&boat=${encodeURIComponent(selectedBoat)}&gear=${encodeURIComponent(selectedGear)}&diff=${encodeURIComponent(selectedDifficulty)}`;
             window.location.href = 'success.html' + urlParams;
         }
     </script>
