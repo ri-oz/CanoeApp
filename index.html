@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canoe Trip RSVP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #1a1a2e;
+            --text-color: #e94560;
+            --highlight: #0f3460;
+            --selected: #16213e;
+            --border-color: #e94560;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: white;
+            font-family: 'Press Start 2P', cursive;
+            text-align: center;
+            padding: 20px;
+            line-height: 1.5;
+        }
+
+        h1, h2 {
+            color: var(--text-color);
+            text-shadow: 2px 2px 0px black;
+            margin-bottom: 20px;
+        }
+
+        h2 { font-size: 1rem; margin-top: 40px; }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            border: 4px solid var(--border-color);
+            padding: 30px;
+            background-color: rgba(0,0,0,0.5);
+            box-shadow: 10px 10px 0px black;
+        }
+
+        .grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* Selectable Cards */
+        .card {
+            border: 3px dashed gray;
+            padding: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 200px;
+            background-color: black;
+        }
+
+        .card .card-image {
+            width: 100%;
+            height: 120px;
+            border-bottom: 2px solid gray;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .card .card-image svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .card:hover {
+            border-color: white;
+            transform: scale(1.05);
+        }
+
+        .card.active {
+            border: 4px solid #4ecca3;
+            background-color: var(--highlight);
+            box-shadow: 0 0 15px #4ecca3;
+        }
+
+        .card h3 {
+            font-size: 0.8rem;
+            color: #4ecca3;
+        }
+
+        .card p {
+            font-size: 0.6rem;
+            color: #aaa;
+        }
+
+        /* Character Input */
+        input[type="text"] {
+            font-family: 'Press Start 2P', cursive;
+            background: black;
+            color: #4ecca3;
+            border: 3px solid var(--border-color);
+            padding: 15px;
+            font-size: 1rem;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #4ecca3;
+        }
+
+        /* Submit Button */
+        .start-btn {
+            margin-top: 50px;
+            background-color: var(--text-color);
+            color: white;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.2rem;
+            padding: 15px 30px;
+            border: 4px solid white;
+            cursor: pointer;
+            box-shadow: 5px 5px 0px black;
+            transition: 0.1s;
+        }
+
+        .start-btn:hover {
+            background-color: #ff2a4b;
+            transform: translate(-2px, -2px);
+            box-shadow: 7px 7px 0px black;
+        }
+
+        .start-btn:active {
+            transform: translate(3px, 3px);
+            box-shadow: 2px 2px 0px black;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>PLAYER SELECT</h1>
+
+        <form id="rsvpForm" name="canoe-rsvp" method="POST" data-netlify="true" action="/success.html">
+            <input type="hidden" name="form-name" value="canoe-rsvp">
+
+            <h2>1. ENTER PLAYER NAME</h2>
+            <input type="text" id="playerName" name="playerName" placeholder="e.g. River King" required>
+
+            <h2>2. CHOOSE YOUR VESSEL</h2>
+            <input type="hidden" id="vesselField" name="vessel" value="">
+            <div class="grid" id="boatSelection">
+                <div class="card boat-card" data-value="Crimson Canoe">
+                    <div class="card-image">
+                        <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="120" fill="#1a0a0a"/>
+                            <path d="M30 90 Q100 40 170 90" stroke="#e94560" stroke-width="4" fill="none"/>
+                            <path d="M25 90 Q100 50 175 90 Z" fill="#c0392b" opacity="0.6"/>
+                            <line x1="100" y1="50" x2="100" y2="80" stroke="#aaa" stroke-width="3"/>
+                            <line x1="85" y1="65" x2="115" y2="65" stroke="#aaa" stroke-width="3"/>
+                            <text x="100" y="25" text-anchor="middle" fill="#e94560" font-size="11" font-family="monospace" font-weight="bold">CANOE</text>
+                        </svg>
+                    </div>
+                    <h3>Crimson Cruiser</h3>
+                    <p>Class: Heavy Canoe</p>
+                    <p>Capacity: 3 Players</p>
+                    <p>Stat: High Cargo, Low Speed</p>
+                </div>
+                <div class="card boat-card" data-value="Orange Kayak">
+                    <div class="card-image">
+                        <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="120" fill="#1a0f0a"/>
+                            <path d="M15 75 Q100 25 185 75" stroke="#e67e22" stroke-width="4" fill="none"/>
+                            <path d="M10 75 Q100 35 190 75 Z" fill="#e67e22" opacity="0.5"/>
+                            <line x1="100" y1="38" x2="100" y2="68" stroke="#aaa" stroke-width="3"/>
+                            <line x1="82" y1="53" x2="118" y2="53" stroke="#aaa" stroke-width="3"/>
+                            <text x="100" y="20" text-anchor="middle" fill="#e67e22" font-size="11" font-family="monospace" font-weight="bold">KAYAK</text>
+                        </svg>
+                    </div>
+                    <h3>Orange Outlaw</h3>
+                    <p>Class: Rapid Kayak</p>
+                    <p>Capacity: 2 Players</p>
+                    <p>Stat: High Speed, Low Cargo</p>
+                </div>
+            </div>
+
+            <h2>3. SELECT DIFFICULTY</h2>
+            <input type="hidden" id="difficultyField" name="difficulty" value="">
+            <div class="grid" id="difficultySelection">
+                <div class="card diff-card" data-value="Chill">
+                    <h3>EASY</h3>
+                    <p>Lazy River Float</p>
+                    <p>(Snacks included)</p>
+                </div>
+                <div class="card diff-card" data-value="Moderate">
+                    <h3>NORMAL</h3>
+                    <p>Steady Paddling</p>
+                    <p>(A light workout)</p>
+                </div>
+                <div class="card diff-card" data-value="Hardcore">
+                    <h3>HARDCORE</h3>
+                    <p>White Water Rush</p>
+                    <p>(Prepare to get wet)</p>
+                </div>
+            </div>
+
+            <button type="submit" class="start-btn">JOIN LOBBY</button>
+        </form>
+    </div>
+
+    <script>
+        let selectedBoat = null;
+        let selectedDifficulty = null;
+
+        function setupSelection(cardClass, hiddenFieldId, callback) {
+            const cards = document.querySelectorAll(cardClass);
+            const hiddenField = document.getElementById(hiddenFieldId);
+            cards.forEach(card => {
+                card.addEventListener('click', () => {
+                    cards.forEach(c => c.classList.remove('active'));
+                    card.classList.add('active');
+                    const value = card.getAttribute('data-value');
+                    hiddenField.value = value;
+                    callback(value);
+                });
+            });
+        }
+
+        setupSelection('.boat-card', 'vesselField', (val) => selectedBoat = val);
+        setupSelection('.diff-card', 'difficultyField', (val) => selectedDifficulty = val);
+
+        document.getElementById('rsvpForm').addEventListener('submit', function(e) {
+            const playerName = document.getElementById('playerName').value.trim();
+
+            if (!playerName) {
+                e.preventDefault();
+                alert("ERROR: Player Name required!");
+                return;
+            }
+            if (!selectedBoat) {
+                e.preventDefault();
+                alert("ERROR: Please select a vessel!");
+                return;
+            }
+            if (!selectedDifficulty) {
+                e.preventDefault();
+                alert("ERROR: Please select a difficulty level!");
+                return;
+            }
+        });
+    </script>
+</body>
+</html>
