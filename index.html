@@ -14,10 +14,10 @@
             --highlight-green: #2ecc71; 
             --border-teal: #117864;
             --danger-red: #ff2a4b;
+            --category-color: #f39c12; /* Golden orange for categories */
         }
 
         body {
-            /* Gradient background transitioning from deep green to deep blue */
             background: linear-gradient(135deg, var(--bg-forest) 0%, var(--bg-river) 100%);
             background-attachment: fixed;
             color: white;
@@ -36,7 +36,16 @@
         }
 
         h1 { font-size: 2rem; line-height: 1.3; }
-        h2 { font-size: 1rem; margin-top: 40px; }
+        h2 { font-size: 1rem; margin-top: 50px; border-bottom: 2px solid var(--border-teal); padding-bottom: 10px;}
+        
+        .category-title {
+            color: var(--category-color);
+            font-size: 0.8rem;
+            margin-top: 30px;
+            text-align: left;
+            padding-left: 10%;
+            text-shadow: 1px 1px 0px black;
+        }
 
         .container {
             max-width: 800px;
@@ -48,9 +57,7 @@
         }
 
         /* --- INTRO SCREEN STYLES --- */
-        #intro-screen {
-            display: block; /* Visible by default */
-        }
+        #intro-screen { display: block; }
 
         .briefing-text {
             text-align: left;
@@ -68,13 +75,8 @@
             text-shadow: 1px 1px 0px black;
         }
 
-        .briefing-text ul {
-            padding-left: 20px;
-        }
-
-        .briefing-text li {
-            margin-bottom: 10px;
-        }
+        .briefing-text ul { padding-left: 20px; }
+        .briefing-text li { margin-bottom: 10px; }
 
         .warning-box {
             color: var(--danger-red);
@@ -85,15 +87,14 @@
         }
 
         /* --- SELECTION SCREEN STYLES --- */
-        #selection-screen {
-            display: none; /* Hidden until button is clicked */
-        }
+        #selection-screen { display: none; }
 
         .grid {
             display: flex;
             justify-content: center;
             gap: 20px;
             flex-wrap: wrap;
+            margin-bottom: 20px;
         }
 
         /* Selectable Cards */
@@ -104,6 +105,9 @@
             transition: 0.2s;
             width: 200px;
             background-color: #081410; 
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .card img {
@@ -125,7 +129,14 @@
             box-shadow: 0 0 15px var(--highlight-green);
         }
 
-        .card h3 { font-size: 0.8rem; color: var(--highlight-green); margin: 10px 0; }
+        /* Gear Multi-Select styling differentiation */
+        .gear-card.active {
+            border-color: var(--category-color);
+            box-shadow: 0 0 15px var(--category-color);
+        }
+
+        .card h3 { font-size: 0.7rem; color: var(--highlight-green); margin: 10px 0; line-height: 1.4; }
+        .gear-card h3 { color: var(--category-color); }
         .card p { font-size: 0.6rem; color: #b3d4c6; margin: 5px 0;}
 
         /* Inputs & Buttons */
@@ -139,6 +150,7 @@
             width: 80%;
             max-width: 400px;
             text-align: center;
+            margin-top: 20px;
         }
 
         input[type="text"]:focus {
@@ -177,7 +189,7 @@
 
     <div class="container" id="intro-screen">
         <h1>📜 QUEST BRIEFING</h1>
-        <h2 style="color: var(--highlight-green);">THE ABAVA WILDERNESS RUN</h2>
+        <h2 style="color: var(--highlight-green); border: none;">THE ABAVA WILDERNESS RUN</h2>
         
         <div class="briefing-text">
             <p><strong>> LOCATION:</strong> Renda (Avoti) ➡️ Naba Lakes</p>
@@ -246,52 +258,66 @@
             </div>
         </div>
 
-        <h2>3. CHOOSE YOUR GEAR</h2>
-        <div class="grid" id="gearSelection">
+        <h2>3. INVENTORY & GEAR (MULTI-SELECT)</h2>
+        
+        <h3 class="category-title">[ 1. MOVEMENT ]</h3>
+        <div class="grid">
             <div class="card gear-card" data-value="Canoe Paddle">
                 <img src="Canoe paddle.jpg" alt="Canoe Paddle">
                 <h3>Canoe Paddle</h3>
-                <p>Power: +2, Cargo: -1</p>
-            </div>
-            <div class="card gear-card" data-value="Dry Bag">
-                <img src="Dry bag.jpg" alt="Dry Bag">
-                <h3>Dry Bag</h3>
-                <p>Cargo: +5, Water Resist</p>
-            </div>
-            <div class="card gear-card" data-value="Survival Grass">
-                <img src="Grass.jpg" alt="Survival Grass">
-                <h3>Survival Grass</h3>
-                <p>Camouflage: +3, Food (Desperate): +1</p>
-            </div>
-            <div class="card gear-card" data-value="Portable Hammock">
-                <img src="Hammock .png" alt="Portable Hammock">
-                <h3>Portable Hammock</h3>
-                <p>Rest: +4, Comfort: +2</p>
-            </div>
-            <div class="card gear-card" data-value="Hardcore Ration">
-                <img src="Meat.jpg" alt="Hardcore Ration">
-                <h3>Hardcore Ration</h3>
-                <p>Sustenance: +8, Energy: +3</p>
-            </div>
-            <div class="card gear-card" data-value="Mystery Substance">
-                <img src="Substance .jpg" alt="Mystery Substance">
-                <h3>Mystery Substance</h3>
-                <p>Effects: Unknown. Use at own risk.</p>
-            </div>
-            <div class="card gear-card" data-value="Outpost Tent">
-                <img src="Tent.jpg" alt="Outpost Tent">
-                <h3>Outpost Tent</h3>
-                <p>Protection: +5, Group Rest: +6</p>
-            </div>
-            <div class="card gear-card" data-value="Morale Bottle">
-                <img src="Whiskey .jpg" alt="Morale Bottle">
-                <h3>Morale Bottle</h3>
-                <p>Morale: +5, Warmth: +2, Sanity: -1</p>
+                <p>Standard propulsion. Reliable & steady.</p>
             </div>
             <div class="card gear-card" data-value="Kayak Paddle">
                 <img src="kayak paddle.jpg" alt="Kayak Paddle">
                 <h3>Kayak Paddle</h3>
-                <p>Speed: +3, Cargo: -1</p>
+                <p>Double-bladed speed. High agility.</p>
+            </div>
+        </div>
+
+        <h3 class="category-title">[ 2. POWER BOOSTERS ]</h3>
+        <div class="grid">
+            <div class="card gear-card" data-value="Morale Bottle">
+                <img src="Whiskey .jpg" alt="Morale Bottle">
+                <h3>Morale Bottle</h3>
+                <p>Liquid courage. +5 Morale, -2 Coordination.</p>
+            </div>
+            <div class="card gear-card" data-value="Mystery Substance">
+                <img src="Substance .jpg" alt="Mystery Substance">
+                <h3>Mystery Substance</h3>
+                <p>Unknown buff. Roll the dice at your own risk.</p>
+            </div>
+        </div>
+
+        <h3 class="category-title">[ 3. SURVIVAL ]</h3>
+        <div class="grid">
+            <div class="card gear-card" data-value="Outpost Tent">
+                <img src="Tent.jpg" alt="Outpost Tent">
+                <h3>Outpost Tent</h3>
+                <p>Portable basecamp. +10 Shelter, Heavy Load.</p>
+            </div>
+            <div class="card gear-card" data-value="Portable Hammock">
+                <img src="Hammock .png" alt="Portable Hammock">
+                <h3>Portable Hammock</h3>
+                <p>Elevated rest. 100% Bug avoidance.</p>
+            </div>
+            <div class="card gear-card" data-value="Dry Bag">
+                <img src="Dry bag.jpg" alt="Dry Bag">
+                <h3>Dry Bag</h3>
+                <p>Loot protector. Absolute water resistance.</p>
+            </div>
+        </div>
+
+        <h3 class="category-title">[ 4. NUTRITION ]</h3>
+        <div class="grid">
+            <div class="card gear-card" data-value="Hardcore Ration">
+                <img src="Meat.jpg" alt="Hardcore Ration">
+                <h3>Hardcore Ration</h3>
+                <p>Max protein. Essential for heavy paddling.</p>
+            </div>
+            <div class="card gear-card" data-value="Survival Grass">
+                <img src="Grass.jpg" alt="Survival Grass">
+                <h3>Survival Grass</h3>
+                <p>Desperate forage. Eat only if out of meat.</p>
             </div>
         </div>
 
@@ -319,15 +345,16 @@
         function acceptChallenge() {
             document.getElementById('intro-screen').style.display = 'none';
             document.getElementById('selection-screen').style.display = 'block';
-            window.scrollTo(0, 0); // Scrolls back to top for the menu
+            window.scrollTo(0, 0); 
         }
 
-        // Handle card clicking logic
+        // Selection Logic Variables
         let selectedBoat = null;
-        let selectedGear = null; // New global variable
         let selectedDifficulty = null;
+        let selectedGearArray = []; // Using an array for multi-select
 
-        function setupSelection(cardClass, callback) {
+        // Single Select Logic (Boats & Difficulty)
+        function setupSingleSelection(cardClass, callback) {
             const cards = document.querySelectorAll(cardClass);
             cards.forEach(card => {
                 card.addEventListener('click', () => {
@@ -338,21 +365,42 @@
             });
         }
 
-        setupSelection('.boat-card', (val) => selectedBoat = val);
-        setupSelection('.gear-card', (val) => selectedGear = val); // New listener
-        setupSelection('.diff-card', (val) => selectedDifficulty = val);
+        // Multi-Select Logic (Gear)
+        function setupMultiSelection() {
+            const gearCards = document.querySelectorAll('.gear-card');
+            gearCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    card.classList.toggle('active'); // Toggles the selection visually
+                    const val = card.getAttribute('data-value');
+                    
+                    if (card.classList.contains('active')) {
+                        selectedGearArray.push(val); // Add to inventory
+                    } else {
+                        selectedGearArray = selectedGearArray.filter(item => item !== val); // Remove from inventory
+                    }
+                });
+            });
+        }
 
-        // Submit RSVP and go to success page
+        // Initialize listeners
+        setupSingleSelection('.boat-card', (val) => selectedBoat = val);
+        setupSingleSelection('.diff-card', (val) => selectedDifficulty = val);
+        setupMultiSelection(); 
+
+        // Submit RSVP
         function submitRSVP() {
             const playerName = document.getElementById('playerName').value.trim();
 
             if (!playerName) return alert("ERROR: Explorer Name required!");
             if (!selectedBoat) return alert("ERROR: Please select a vessel!");
-            if (!selectedGear) return alert("ERROR: Please choose your gear!"); // New validation
+            if (selectedGearArray.length === 0) return alert("ERROR: You can't go empty-handed! Choose at least one gear item."); 
             if (!selectedDifficulty) return alert("ERROR: Please select a difficulty level!");
 
+            // Format gear array into a comma-separated string for the URL
+            const gearString = selectedGearArray.join(', ');
+
             // Redirects to success.html and passes the choices in the URL
-            const urlParams = `?name=${encodeURIComponent(playerName)}&boat=${encodeURIComponent(selectedBoat)}&gear=${encodeURIComponent(selectedGear)}&diff=${encodeURIComponent(selectedDifficulty)}`;
+            const urlParams = `?name=${encodeURIComponent(playerName)}&boat=${encodeURIComponent(selectedBoat)}&gear=${encodeURIComponent(gearString)}&diff=${encodeURIComponent(selectedDifficulty)}`;
             window.location.href = 'success.html' + urlParams;
         }
     </script>
